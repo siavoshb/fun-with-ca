@@ -97,7 +97,7 @@ function randomRule() {
 }
 
 function bitEntropy(w)  {
-	h =[0, 0]
+	h =[0, 0];
 	for (i=0; i<WORLD_ROWS; i++) {
 		for (j=0; j<WORLD_COLS_IN_BYTES*8; j++) {
 			h[bitAt(w, i, j)]++;
