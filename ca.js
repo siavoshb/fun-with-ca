@@ -1,7 +1,3 @@
-<html>
-
-<script type="text/javascript">
-
 function initialize(w) {
 	for (i=0; i<w.length; i++) {
 		w[i] = Math.round(Math.random() * 255);
@@ -117,60 +113,3 @@ function bitEntropy(w)  {
 
 	return -1 * e;
 }
-
-</script>
-
-<canvas id="canvas" height="150" width="200"></canvas>
-
-<script type="text/javascript">
-
-var WORLD_ROWS = 150;
-var WORLD_COLS_IN_BYTES = 25;
-
-var bestentropy = 1;
-var bestworld;
-var bestrule;
-
-<!-- one -->
-rule = [1,1,1,1,0,1,1,0,1,0,0,1,1,1,1,1,0,0,1,1,0,1,1,1,0,1,1,0,0,0,0,0,0,1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,0,1,1,0,0,1,1,0,1,1,1,1,1,0,1,1,0,1,0,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1,0,0,1,0,1,1,1,1,0,1,1,1,1,0,0,0,1,0,1,1,0,0,1,1,1,1,0,1,1,0,0,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,0,0,0,1,0,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,0,0,0,1,1,0,0,0,0,1,1,1,0,0,0,1,0,1,1,1,1,1,0,0,0,1,0,1,1,1,0,0,1,0,1,0,0,1,1,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,1,1,1,0,0];
-
-var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
-initialize(world);
-
-setInterval(function() {
-	world = nextEpoch(world, rule);
-	console.log("entropy = " + bitEntropy(world) )
-	draw(world, document.getElementById("canvas"))
-}, 500);
-
-
-<!-- many -->
-
-
-k=0;
-while (false) {
-	var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
-	initialize(world);
-	rule = randomRule();
-	for (i=0; i<25; i++) {
-		world = nextEpoch(world, rule);
-	}
-
-	en = bitEntropy(world);
-
-	if (en < bestentropy) {
-		bestentropy = en;
-		bestworld = world;
-		bestrule = rule;
-
-		console.log("rule: " + rule)
-		console.log("entropy = " + en )
-		draw(bestworld, document.getElementById("canvas"))
-	}
-
-	if (k++>30000)
-		break;
-}
-
-</script>
-</html>
