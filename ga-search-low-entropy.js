@@ -16,7 +16,7 @@ function seedNewGeneration(best, pop_size) {
 					.concat(girl_rule.slice(start_cut_index, end_cut_index))
 					.concat(boy_rule.slice(end_cut_index, boy_rule.length));
 
-		mutate_bit_count = Math.floor(Math.random() * (0.1 * new_rule.length));
+		mutate_bit_count = Math.floor(Math.random() * (0.20 * new_rule.length));
 		for (m=0; m<mutate_bit_count; m++) {
 			mutate_index =  Math.floor(new_rule.length * Math.random());
 			if (new_rule[mutate_index] > 0) {
@@ -34,12 +34,12 @@ function seedNewGeneration(best, pop_size) {
 
 function main() {
 	var WORLD_ROWS = 150;
-	var WORLD_COLS_IN_BYTES = 50;
+	var WORLD_COLS_IN_BYTES = 25;
 
 	var POPULATION_SIZE = 500;
 	var BEST_POPULATION_SIZE = 50;
-	var EPOCHS_FOR_RULE = 40;
-	var GENERATIONS = 10;
+	var EPOCHS_FOR_RULE = 20;
+	var GENERATIONS = 100;
 
 	var population = [];
 	for (r=0; r<POPULATION_SIZE; r++) {
