@@ -1,6 +1,6 @@
 function initialize(w) {
 	for (i=0; i<w.length; i++) {
-		w[i] = Math.round(Math.random() * 255);
+		w[i] = Math.round(Math.random() * 200);
 	}
 }
 

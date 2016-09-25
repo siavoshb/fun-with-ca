@@ -1,0 +1,66 @@
+<html>
+<head>
+	<script type="text/javascript" src="ca.js"></script>
+</head>
+<body>
+
+<canvas id="canvas1" height="100" width="240"></canvas>
+<canvas id="canvas2"></canvas>
+<canvas id="canvas3"></canvas>
+<canvas id="canvas4"></canvas>
+
+<script>
+var WORLD_ROWS = 100;
+var WORLD_COLS_IN_BYTES = 30;
+
+function scaleWorld(w, k) {
+	var wk = []
+	for (i=0; i<WORLD_ROWS-k; i++) {
+		for (j=0; j<WORLD_COLS_IN_BYTES*8-k; j++) {
+			
+			a = 0;
+			for (n=i; n<i+k; n++) {
+				for (m=j; m<j+k; m++) {
+					a += bitAt(w, n, m);
+				}
+			}
+			wk[i * (WORLD_COLS_IN_BYTES * 8 - k) + j] = 255 * a / (k*k);	
+		}
+	}
+
+	return wk;
+}
+
+var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
+initialize(world);
+draw(world, document.getElementById("canvas1"))
+
+k=3;
+k_world = scaleWorld(world, k);
+document.getElementById("canvas2").height = WORLD_ROWS - k;
+document.getElementById("canvas2").width = WORLD_COLS_IN_BYTES*8 - k;
+drawGrayScale(k_world, document.getElementById("canvas2"))
+console.log("gray entropy: " + grayEntropy(k_world, WORLD_ROWS - k, WORLD_COLS_IN_BYTES*8 - k))
+
+k=4;
+k_world = scaleWorld(world, k);
+document.getElementById("canvas3").height = WORLD_ROWS - k;
+document.getElementById("canvas3").width = WORLD_COLS_IN_BYTES*8 - k;
+drawGrayScale(k_world, document.getElementById("canvas3"))
+console.log("gray entropy: " + grayEntropy(k_world, WORLD_ROWS - k, WORLD_COLS_IN_BYTES*8 - k))
+
+k=5;
+k_world = scaleWorld(world, k);
+document.getElementById("canvas4").height = WORLD_ROWS - k;
+document.getElementById("canvas4").width = WORLD_COLS_IN_BYTES*8 - k;
+drawGrayScale(k_world, document.getElementById("canvas4"))
+console.log("gray entropy: " + grayEntropy(k_world, WORLD_ROWS - k, WORLD_COLS_IN_BYTES*8 - k))
+
+
+
+
+</script>
+
+
+</body>
+</html>

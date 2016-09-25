@@ -36,12 +36,12 @@ function main() {
 	var WORLD_ROWS = 150;
 	var WORLD_COLS_IN_BYTES = 25;
 
-	var POPULATION_SIZE = 500;
-	var BEST_POPULATION_SIZE = 50;
-	var EPOCHS_FOR_RULE = 20;
-	var GENERATIONS = 20;
+	var POPULATION_SIZE = 1000;
+	var BEST_POPULATION_SIZE = 100;
+	var EPOCHS_FOR_RULE = 50;
+	var GENERATIONS = 100;
 
-	var ENTROPY_SCALE_K = 5;
+	var ENTROPY_SCALE_K = 4;
 
 	var population = [];
 	for (r=0; r<POPULATION_SIZE; r++) {

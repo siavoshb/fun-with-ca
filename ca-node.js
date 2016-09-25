@@ -124,7 +124,7 @@ module.exports = {
 				a = 0;
 				for (n=i; n<i+k; n++) {
 					for (m=j; m<j+k; m++) {
-						a += bitAt(w, n, m, col_bytes);
+						a += this.bitAt(w, n, m, col_bytes);
 					}
 				}
 				wk[i * (col_bytes * 8 - k) + j] = 255 * a / (k*k);	
@@ -134,7 +134,7 @@ module.exports = {
 		return wk;
 	},
 
-	function gray256Entropy(w, rows, cols) {
+	gray256Entropy: function(w, rows, cols) {
 		var h =[];
 		for (i=0; i<256; i++) {
 			h[i] = 0;
