@@ -63,10 +63,20 @@ function draw(w, el) {
 		for (j=0; j<width; j++) {
 			b = bitAt(w,i,j);
 			index = (i * width + j) * 4;
-			imageData.data[index+0] = b * 88;
-			imageData.data[index+1] = b * 133;
-			imageData.data[index+2] = b * 77;
+			if (b > 0) {
+				imageData.data[index+0] = 50;
+				imageData.data[index+1] = 205;
+				imageData.data[index+2] = 50;
+			} else {
+				imageData.data[index+0] = 0;
+				imageData.data[index+1] = 0;
+				imageData.data[index+2] = 0;
+			}
 			imageData.data[index+3] = 255;
+			
+			//imageData.data[index+1] = b * 0;
+			//imageData.data[index+2] = b * 77;
+			
 		}
 	}
 
