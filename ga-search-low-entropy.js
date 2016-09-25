@@ -37,11 +37,12 @@ function main() {
 	var WORLD_COLS_IN_BYTES = 25;
 
 	var POPULATION_SIZE = 1000;
-	var BEST_POPULATION_SIZE = 100;
-	var EPOCHS_FOR_RULE = 50;
-	var GENERATIONS = 100;
+	var BEST_POPULATION_SIZE = 50;
+	var EPOCHS_FOR_RULE = 25;
+	var GENERATIONS = 500;
 
-	var ENTROPY_SCALE_K = 4;
+	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
+	var HIGH_ENTROPY_SCALE_K = 50; // we want high entorpy at large scales
 
 	var population = [];
 	for (r=0; r<POPULATION_SIZE; r++) {
@@ -52,6 +53,7 @@ function main() {
 
 	for (g=0; g<GENERATIONS; g++) {
 		for (p=0; p<population.length; p++) {
+			console.log("a " + p)
 			var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
 			tools.initialize(world);
 			
@@ -60,40 +62,52 @@ function main() {
 			}
 			
 			//en = tools.bitEntropy(world, WORLD_ROWS, WORLD_COLS_IN_BYTES);
-			world_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, ENTROPY_SCALE_K);
-			en = tools.gray256Entropy(world_scaled, WORLD_ROWS-ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-ENTROPY_SCALE_K)
+			world_small_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, LOW_ENTROPY_SCALE_K);
+			en_small = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-LOW_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-LOW_ENTROPY_SCALE_K)
+
+			world_large_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, HIGH_ENTROPY_SCALE_K);
+			en_large = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-HIGH_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-HIGH_ENTROPY_SCALE_K)
+
+			console.log("en " + en_small + " " + en_large )
 			
 			if (best_population.length < BEST_POPULATION_SIZE) {
 				best_population[best_population.length] = {
 					rule: population[p],
-					entropy: en
+					small_scale_entropy: en_small,
+					large_scale_entropy: en_large
 				}
 			} else {
-				max_entropy = 0;
-				max_entropy_index = -1;
+				better_entropies_index = -1;
+				console.log("c")
 				for (j=0; j<best_population.length; j++) {
-					if (best_population[j].entropy > en) {
-						max_entropy = best_population[j].entropy;
-						max_entropy_index = j;
+
+					if ((best_population[j].small_scale_entropy > en_small) && 
+						(best_population[j].large_scale_entropy < en_large)) 
+					{
+						better_entropies_index = j;
 					}
 				}
-				if (max_entropy_index > -1) {
-					best_population[max_entropy_index].entropy = en;
-					best_population[max_entropy_index].rule = population[p];
+				if (better_entropies_index > -1) {
+					best_population[better_entropies_index].small_scale_entropy = en_small;
+					best_population[better_entropies_index].large_scale_entropy = en_large;
+					best_population[better_entropies_index].rule = population[p];
 				}
 			}
 		}
 
-		best_score = 99;
+		best_low_entropy = 99;
+		best_high_entropy = -1;
 		var best_rule = [];
 		for (t=0; t<best_population.length; t++) {
-			if (best_population[t].entropy < best_score) {
-				best_score = best_population[t].entropy;
+			if ((best_population[t].small_scale_entropy < best_low_entropy) 
+				&& (best_population[t].large_scale_entropy > best_high_entropy)) {
+				best_low_entropy = best_population[t].small_scale_entropy;
+				best_high_entropy = best_population[t].large_scale_entropy;
 				best_rule = best_population[t].rule;
 			}
 		}
 
-		console.log("gen " + g + " lowest entropy is " + best_score)
+		console.log("gen " + g + " lowest entropy has low entropy " + best_low_entropy + " and high entropy " + best_high_entropy)
 		console.log(JSON.stringify(best_rule))
 
 		population = seedNewGeneration(best_population, POPULATION_SIZE)
