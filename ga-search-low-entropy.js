@@ -39,7 +39,9 @@ function main() {
 	var POPULATION_SIZE = 500;
 	var BEST_POPULATION_SIZE = 50;
 	var EPOCHS_FOR_RULE = 20;
-	var GENERATIONS = 100;
+	var GENERATIONS = 20;
+
+	var ENTROPY_SCALE_K = 5;
 
 	var population = [];
 	for (r=0; r<POPULATION_SIZE; r++) {
@@ -57,7 +59,9 @@ function main() {
 				world = tools.nextEpoch(world, population[p], WORLD_ROWS, WORLD_COLS_IN_BYTES);
 			}
 			
-			en = tools.bitEntropy(world, WORLD_ROWS, WORLD_COLS_IN_BYTES);
+			//en = tools.bitEntropy(world, WORLD_ROWS, WORLD_COLS_IN_BYTES);
+			world_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, ENTROPY_SCALE_K);
+			en = tools.gray256Entropy(world_scaled, WORLD_ROWS-ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-ENTROPY_SCALE_K)
 			
 			if (best_population.length < BEST_POPULATION_SIZE) {
 				best_population[best_population.length] = {

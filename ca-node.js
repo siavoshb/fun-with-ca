@@ -114,6 +114,48 @@ module.exports = {
 		}
 
 		return -1 * e;
+	},
+
+	scaleEntropyOfBitWorld: function(w, rows, col_bytes, k) {
+		var wk = []
+		for (i=0; i<rows-k; i++) {
+			for (j=0; j<col_bytes*8-k; j++) {
+				
+				a = 0;
+				for (n=i; n<i+k; n++) {
+					for (m=j; m<j+k; m++) {
+						a += bitAt(w, n, m, col_bytes);
+					}
+				}
+				wk[i * (col_bytes * 8 - k) + j] = 255 * a / (k*k);	
+			}
+		}
+
+		return wk;
+	},
+
+	function gray256Entropy(w, rows, cols) {
+		var h =[];
+		for (i=0; i<256; i++) {
+			h[i] = 0;
+		}
+
+		for (i=0; i<rows; i++) {
+			for (j=0; j<cols; j++) {
+				h[Math.floor(w[i*rows+j])]++;
+			}
+		}
+		
+		h = h.map(function(x) { return x / (rows*cols); });
+
+		e=0;
+		for (i=0; i<h.length; i++) {
+			if (h[i] > 0) {
+				e += h[i] * Math.log2(h[i]);
+			}
+		}
+
+		return -1 * e;
 	}
 
 }

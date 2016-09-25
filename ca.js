@@ -73,10 +73,26 @@ function draw(w, el) {
 				imageData.data[index+2] = 0;
 			}
 			imageData.data[index+3] = 255;
-			
-			//imageData.data[index+1] = b * 0;
-			//imageData.data[index+2] = b * 77;
-			
+		}
+	}
+
+	c.putImageData(imageData, 0, 0);
+}
+
+function drawGrayScale(w, el) {
+	c = el.getContext("2d");
+	width = el.width;
+	height = el.height;
+	imageData = c.createImageData(width, height);
+
+	for (i=0; i<height; i++) {
+		for (j=0; j<width; j++) {
+			b = w[i*width+j]
+			index = (i * width + j) * 4;
+			imageData.data[index+0] = b;
+			imageData.data[index+1] = 0;
+			imageData.data[index+2] = 0;
+			imageData.data[index+3] = 255;
 		}
 	}
 
@@ -119,6 +135,30 @@ function bitEntropy(w)  {
 	e=0;
 	for (i=0; i<h.length; i++) {
 		e += h[i] * Math.log2(h[i]);
+	}
+
+	return -1 * e;
+}
+
+function grayEntropy(w, rows, cols) {
+	var h =[];
+	for (i=0; i<256; i++) {
+		h[i] = 0;
+	}
+
+	for (i=0; i<rows; i++) {
+		for (j=0; j<cols; j++) {
+			h[Math.floor(w[i*rows+j])]++;
+		}
+	}
+	
+	h = h.map(function(x) { return x / (rows*cols); });
+
+	e=0;
+	for (i=0; i<h.length; i++) {
+		if (h[i] > 0) {
+			e += h[i] * Math.log2(h[i]);
+		}
 	}
 
 	return -1 * e;
