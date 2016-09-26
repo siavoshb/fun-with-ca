@@ -64,13 +64,13 @@ function draw(w, el) {
 			b = bitAt(w,i,j);
 			index = (i * width + j) * 4;
 			if (b > 0) {
-				imageData.data[index+0] = 50;
-				imageData.data[index+1] = 205;
-				imageData.data[index+2] = 50;
-			} else {
 				imageData.data[index+0] = 0;
 				imageData.data[index+1] = 0;
 				imageData.data[index+2] = 0;
+			} else {
+				imageData.data[index+0] = 255;
+				imageData.data[index+1] = 255;
+				imageData.data[index+2] = 255;
 			}
 			imageData.data[index+3] = 255;
 		}

@@ -36,10 +36,10 @@ function main() {
 	var WORLD_ROWS = 150;
 	var WORLD_COLS_IN_BYTES = 25;
 
-	var POPULATION_SIZE = 1000;
-	var BEST_POPULATION_SIZE = 50;
+	var POPULATION_SIZE = 50;
+	var BEST_POPULATION_SIZE = 10;
 	var EPOCHS_FOR_RULE = 25;
-	var GENERATIONS = 500;
+	var GENERATIONS = 10;
 
 	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
 	var HIGH_ENTROPY_SCALE_K = 30; // we want high entorpy at large scales
