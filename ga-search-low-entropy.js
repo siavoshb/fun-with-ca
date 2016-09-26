@@ -42,7 +42,7 @@ function main() {
 	var GENERATIONS = 500;
 
 	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
-	var HIGH_ENTROPY_SCALE_K = 50; // we want high entorpy at large scales
+	var HIGH_ENTROPY_SCALE_K = 30; // we want high entorpy at large scales
 
 	var population = [];
 	for (r=0; r<POPULATION_SIZE; r++) {
@@ -53,7 +53,6 @@ function main() {
 
 	for (g=0; g<GENERATIONS; g++) {
 		for (p=0; p<population.length; p++) {
-			console.log("a " + p)
 			var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
 			tools.initialize(world);
 			
@@ -68,7 +67,9 @@ function main() {
 			world_large_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, HIGH_ENTROPY_SCALE_K);
 			en_large = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-HIGH_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-HIGH_ENTROPY_SCALE_K)
 
-			console.log("en " + en_small + " " + en_large )
+			composite_score = en_large - en_small;
+
+			console.log(g+"."+p + " small: " + en_small + " large: " + en_large + " with composite score " + composite_score)
 			
 			if (best_population.length < BEST_POPULATION_SIZE) {
 				best_population[best_population.length] = {
@@ -78,11 +79,11 @@ function main() {
 				}
 			} else {
 				better_entropies_index = -1;
-				console.log("c")
 				for (j=0; j<best_population.length; j++) {
 
-					if ((best_population[j].small_scale_entropy > en_small) && 
-						(best_population[j].large_scale_entropy < en_large)) 
+					cold = best_population[j].large_scale_entropy - best_population[j].small_scale_entropy;
+
+					if (cold < composite_score) 
 					{
 						better_entropies_index = j;
 					}
@@ -95,19 +96,17 @@ function main() {
 			}
 		}
 
-		best_low_entropy = 99;
-		best_high_entropy = -1;
 		var best_rule = [];
+		var best_score = -99999999999;
 		for (t=0; t<best_population.length; t++) {
-			if ((best_population[t].small_scale_entropy < best_low_entropy) 
-				&& (best_population[t].large_scale_entropy > best_high_entropy)) {
-				best_low_entropy = best_population[t].small_scale_entropy;
-				best_high_entropy = best_population[t].large_scale_entropy;
+			ss = (best_population[t].large_scale_entropy - best_population[t].small_scale_entropy)
+			if (best_score < ss) {
+				best_score = ss;
 				best_rule = best_population[t].rule;
 			}
 		}
 
-		console.log("gen " + g + " lowest entropy has low entropy " + best_low_entropy + " and high entropy " + best_high_entropy)
+		console.log("gen " + g + " with best score " + best_score)
 		console.log(JSON.stringify(best_rule))
 
 		population = seedNewGeneration(best_population, POPULATION_SIZE)
