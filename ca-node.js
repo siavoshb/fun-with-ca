@@ -158,6 +158,27 @@ module.exports = {
 		}
 
 		return -1 * e;
-	}
+	},
 
+	integralImage: function(w, rows, col_bytes) {
+		iw = [];
+		for (i=0; i<rows; i++) {
+			for (j=0; j<col_bytes*8; j++) {
+				a = this.bitAt(w,i,j,col_bytes);
+				b = (i>0) ? iw[(i-1)*col_bytes*8+j] : 0;
+				c = (j>0) ? iw[i*col_bytes*8+j-1] : 0;
+				d = ((i>0)&&(j>0)) ? iw[(i-1)*col_bytes*8+j-1] : 0;
+				iw[i*col_bytes*8+j] = a + b + c - d;
+			}
+		}
+		return iw;
+	},
+
+	squareSumIntegralImage: function(iw, r, c, cols, k) {
+		a_r = r; a_c = c;
+		b_r = r; b_c = c+k;
+		c_r = r+k; c_c = c;
+		d_r = r+k; d_c = c+k;
+		return iw[d_r*cols+d_c] + iw[a_r*cols+a_c] - iw[b_r*cols+b_c] - iw[c_r*cols+c_c];
+	}
 }
