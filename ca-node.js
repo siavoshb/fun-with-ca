@@ -118,18 +118,12 @@ module.exports = {
 		return -1 * e;
 	},
 
-	scaleEntropyOfBitWorld: function(w, rows, col_bytes, k) {
+	scaleEntropyOfBitWorld: function(iw, rows, col_bytes, k) {
 		var wk = []
+
 		for (i=0; i<rows-k; i++) {
 			for (j=0; j<col_bytes*8-k; j++) {
-				
-				a = 0;
-				for (n=i; n<i+k; n++) {
-					for (m=j; m<j+k; m++) {
-						a += this.bitAt(w, n, m, col_bytes);
-					}
-				}
-				wk[i * (col_bytes * 8 - k) + j] = 255 * a / (k*k);	
+				wk[i * (col_bytes * 8 - k) + j] = 255 * this.squareSumIntegralImage(iw,i,j,col_bytes*8,k) / (k*k);
 			}
 		}
 

@@ -36,10 +36,10 @@ function main() {
 	var WORLD_ROWS = 150;
 	var WORLD_COLS_IN_BYTES = 25;
 
-	var POPULATION_SIZE = 50;
-	var BEST_POPULATION_SIZE = 10;
+	var POPULATION_SIZE = 1000;
+	var BEST_POPULATION_SIZE = 100;
 	var EPOCHS_FOR_RULE = 25;
-	var GENERATIONS = 10;
+	var GENERATIONS = 500;
 
 	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
 	var HIGH_ENTROPY_SCALE_K = 30; // we want high entorpy at large scales
@@ -60,16 +60,16 @@ function main() {
 				world = tools.nextEpoch(world, population[p], WORLD_ROWS, WORLD_COLS_IN_BYTES);
 			}
 			
-			//en = tools.bitEntropy(world, WORLD_ROWS, WORLD_COLS_IN_BYTES);
-			world_small_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, LOW_ENTROPY_SCALE_K);
+			integral_image = tools.integralImage(world, WORLD_ROWS, WORLD_COLS_IN_BYTES);
+
+			world_small_scaled = tools.scaleEntropyOfBitWorld(integral_image, WORLD_ROWS, WORLD_COLS_IN_BYTES, LOW_ENTROPY_SCALE_K);
 			en_small = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-LOW_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-LOW_ENTROPY_SCALE_K)
 
-			world_large_scaled = tools.scaleEntropyOfBitWorld(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, HIGH_ENTROPY_SCALE_K);
+			world_large_scaled = tools.scaleEntropyOfBitWorld(integral_image, WORLD_ROWS, WORLD_COLS_IN_BYTES, HIGH_ENTROPY_SCALE_K);
 			en_large = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-HIGH_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-HIGH_ENTROPY_SCALE_K)
-
 			composite_score = en_large - en_small;
 
-			console.log(g+"."+p + " small: " + en_small + " large: " + en_large + " with composite score " + composite_score)
+//			console.log(g+"."+p + " small: " + en_small + " large: " + en_large + " with composite score " + composite_score)
 			
 			if (best_population.length < BEST_POPULATION_SIZE) {
 				best_population[best_population.length] = {
