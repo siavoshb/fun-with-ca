@@ -88,16 +88,30 @@ module.exports = {
 		return w1;
 	},
 
-	randomRule: function() {
-		rule = [];
+	randomRule: function() { 
+		rule = new Uint8Array(256);
+		for (z=0; z<256; z++) {
+			rule[z] = 2;
+		}
+		
 		for (i=0; i<256; i++) {
-			if (Math.random() > 0.5) {
-				rule[i] = 1;
-			} else {
-				rule[i] = 0;
+			if (rule[i] != 2) {
+				continue;
+			}
+
+			val = (Math.random() > 0.5) ? 1 : 0;
+			rule[i] = val;
+			for (j=0; j<8; j++) {
+				sym_index = (i >> j) | (i<<(8-j))
+				rule[sym_index] = val;
 			}
 		}
-		return rule;
+
+		rr = [];
+		for (h=0; h<rule.length; h++)
+			rr[h] = rule[h];
+
+		return rr;
 	},
 
 	bitEntropy: function(w, rows, col_bytes)  {

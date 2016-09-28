@@ -38,7 +38,7 @@ function main() {
 
 	var POPULATION_SIZE = 1000;
 	var BEST_POPULATION_SIZE = 100;
-	var EPOCHS_FOR_RULE = 25;
+	var EPOCHS_FOR_RULE = 30;
 	var GENERATIONS = 500;
 
 	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
