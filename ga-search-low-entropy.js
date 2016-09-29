@@ -2,6 +2,7 @@ var tools = require("./ca-node.js");
 
 function seedNewGeneration(best, pop_size) {
 	np = [];
+
 	for (i=0; i<pop_size; i++) {
 		boy_rule = best[Math.floor(best.length * Math.random())].rule;
 		girl_rule = best[Math.floor(best.length * Math.random())].rule;
@@ -32,22 +33,39 @@ function seedNewGeneration(best, pop_size) {
 	return np;
 }
 
-function main() {
-	var WORLD_ROWS = 150;
-	var WORLD_COLS_IN_BYTES = 25;
-
-	var POPULATION_SIZE = 1000;
-	var BEST_POPULATION_SIZE = 100;
-	var EPOCHS_FOR_RULE = 30;
-	var GENERATIONS = 500;
-
-	var LOW_ENTROPY_SCALE_K = 5; // low entropy at small scales
-	var HIGH_ENTROPY_SCALE_K = 30; // we want high entorpy at large scales
-
+function randomPopulation(count) {
+	var p_map = {};
 	var population = [];
-	for (r=0; r<POPULATION_SIZE; r++) {
-		population[r] = tools.randomRule();
+	r = 0;
+	while (r<count) {
+		new_rule = tools.randomRule();
+		key = new_rule.join("").toString();
+		if (!(key in p_map)) {
+			population[r++] = new_rule;
+			p_map[key] = 1;
+		}
 	}
+
+	return population;
+}
+
+function escore(e_large, e_small) {
+	return e_large - 2*e_small;
+}
+
+function main() {
+	var WORLD_ROWS = 200;
+	var WORLD_COLS_IN_BYTES = 40;
+
+	var POPULATION_SIZE = 500;
+	var BEST_POPULATION_SIZE = 100;
+	var EPOCHS_FOR_RULE = 50;
+	var GENERATIONS = 150;
+
+	var LOW_ENTROPY_SCALE_K = 20; // low entropy at small scales
+	var HIGH_ENTROPY_SCALE_K = 60; // we want high entorpy at large scales
+
+	var population = randomPopulation(POPULATION_SIZE);
 
 	var best_population = [];
 
@@ -67,7 +85,9 @@ function main() {
 
 			world_large_scaled = tools.scaleEntropyOfBitWorld(integral_image, WORLD_ROWS, WORLD_COLS_IN_BYTES, HIGH_ENTROPY_SCALE_K);
 			en_large = tools.gray256Entropy(world_small_scaled, WORLD_ROWS-HIGH_ENTROPY_SCALE_K, WORLD_COLS_IN_BYTES*8-HIGH_ENTROPY_SCALE_K)
-			composite_score = en_large - en_small;
+			
+
+			composite_score = escore(en_large, en_small);
 
 //			console.log(g+"."+p + " small: " + en_small + " large: " + en_large + " with composite score " + composite_score)
 			
@@ -81,7 +101,7 @@ function main() {
 				better_entropies_index = -1;
 				for (j=0; j<best_population.length; j++) {
 
-					cold = best_population[j].large_scale_entropy - best_population[j].small_scale_entropy;
+					cold = escore(best_population[j].large_scale_entropy, best_population[j].small_scale_entropy);
 
 					if (cold < composite_score) 
 					{
@@ -109,7 +129,8 @@ function main() {
 		console.log("gen " + g + " with best score " + best_score)
 		console.log(JSON.stringify(best_rule))
 
-		population = seedNewGeneration(best_population, POPULATION_SIZE)
+		population = seedNewGeneration(best_population, Math.floor(POPULATION_SIZE*0.80))
+		population = population.concat(randomPopulation(POPULATION_SIZE-population.length));
 	}
 }
 
