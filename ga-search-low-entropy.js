@@ -57,8 +57,8 @@ function main() {
 	var WORLD_ROWS = 200;
 	var WORLD_COLS_IN_BYTES = 40;
 
-	var POPULATION_SIZE = 500;
-	var BEST_POPULATION_SIZE = 100;
+	var POPULATION_SIZE = 2000;
+	var BEST_POPULATION_SIZE = 200;
 	var EPOCHS_FOR_RULE = 50;
 	var GENERATIONS = 150;
 
@@ -131,6 +131,7 @@ function main() {
 
 		population = seedNewGeneration(best_population, Math.floor(POPULATION_SIZE*0.80))
 		population = population.concat(randomPopulation(POPULATION_SIZE-population.length));
+		population = population.concat(best_population)
 	}
 }
 
