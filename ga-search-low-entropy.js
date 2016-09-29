@@ -3,7 +3,10 @@ var tools = require("./ca-node.js");
 function seedNewGeneration(best, pop_size) {
 	np = [];
 
-	for (i=0; i<pop_size; i++) {
+	hybrid_cnt = Math.floor((pop_size - best.length) * 0.75);
+	random_cnt = (pop_size - best.length) - hybrid_cnt;
+
+	for (i=0; i<hybrid_cnt; i++) {
 		boy_rule = best[Math.floor(best.length * Math.random())].rule;
 		girl_rule = best[Math.floor(best.length * Math.random())].rule;
 
@@ -17,7 +20,7 @@ function seedNewGeneration(best, pop_size) {
 					.concat(girl_rule.slice(start_cut_index, end_cut_index))
 					.concat(boy_rule.slice(end_cut_index, boy_rule.length));
 
-		mutate_bit_count = Math.floor(Math.random() * (0.20 * new_rule.length));
+		mutate_bit_count = Math.floor(Math.random() * (0.10 * new_rule.length));
 		for (m=0; m<mutate_bit_count; m++) {
 			mutate_index =  Math.floor(new_rule.length * Math.random());
 			if (new_rule[mutate_index] > 0) {
@@ -29,6 +32,12 @@ function seedNewGeneration(best, pop_size) {
 
 		np[i] = new_rule;
 	}
+
+	// include random
+	np = np.concat(randomPopulation(random_cnt));
+
+	// include 
+	np = np.concat(best)
 
 	return np;
 }
@@ -57,12 +66,12 @@ function main() {
 	var WORLD_ROWS = 200;
 	var WORLD_COLS_IN_BYTES = 40;
 
-	var POPULATION_SIZE = 2000;
-	var BEST_POPULATION_SIZE = 200;
+	var POPULATION_SIZE = 5000;
+	var BEST_POPULATION_SIZE = 250;
 	var EPOCHS_FOR_RULE = 50;
-	var GENERATIONS = 150;
+	var GENERATIONS = 1000;
 
-	var LOW_ENTROPY_SCALE_K = 20; // low entropy at small scales
+	var LOW_ENTROPY_SCALE_K = 15; // low entropy at small scales
 	var HIGH_ENTROPY_SCALE_K = 60; // we want high entorpy at large scales
 
 	var population = randomPopulation(POPULATION_SIZE);
@@ -129,9 +138,7 @@ function main() {
 		console.log("gen " + g + " with best score " + best_score)
 		console.log(JSON.stringify(best_rule))
 
-		population = seedNewGeneration(best_population, Math.floor(POPULATION_SIZE*0.80))
-		population = population.concat(randomPopulation(POPULATION_SIZE-population.length));
-		population = population.concat(best_population)
+		pa = seedNewGeneration(best_population, POPULATION_SIZE)
 	}
 }
 
