@@ -4,6 +4,18 @@ function initialize(w) {
 	}
 }
 
+function sparseInitialize(w, rows, col_bytes, chance) {
+	for (i=0; i<rows; i++) {
+		for (j=0; j<col_bytes*8; j++) {
+			if (Math.random() < chance) {
+				setBitAt(w, i, j, 1);
+			} else {
+				setBitAt(w, i, j, 0)
+			}
+		}
+	}
+}
+
 function byteString(n) {
   if (n < 0 || n > 255 || n % 1 !== 0) {
       throw new Error(n + " does not fit in a byte");

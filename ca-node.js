@@ -8,6 +8,19 @@ module.exports = {
 		}
 	},
 
+	sparseInitialize: function(w, rows, col_bytes, chance) {
+		for (i=0; i<rows; i++) {
+			for (j=0; j<col_bytes*8; j++) {
+				if (Math.random() < chance) {
+					this.setBitAt(w, i, j, 1, col_bytes);
+				} else {
+					this.setBitAt(w, i, j, 0, col_bytes)
+				}
+
+			}
+		}
+	},
+
 	byteString: function(n) {
 	  if (n < 0 || n > 255 || n % 1 !== 0) {
 	      throw new Error(n + " does not fit in a byte");

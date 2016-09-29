@@ -63,13 +63,13 @@ function escore(e_large, e_small) {
 }
 
 function main() {
-	var WORLD_ROWS = 200;
-	var WORLD_COLS_IN_BYTES = 40;
+	var WORLD_ROWS = 100;
+	var WORLD_COLS_IN_BYTES = 20;
 
-	var POPULATION_SIZE = 5000;
-	var BEST_POPULATION_SIZE = 250;
+	var POPULATION_SIZE = 300;
+	var BEST_POPULATION_SIZE = 50;
 	var EPOCHS_FOR_RULE = 50;
-	var GENERATIONS = 1000;
+	var GENERATIONS = 30;
 
 	var LOW_ENTROPY_SCALE_K = 15; // low entropy at small scales
 	var HIGH_ENTROPY_SCALE_K = 60; // we want high entorpy at large scales
@@ -81,7 +81,9 @@ function main() {
 	for (g=0; g<GENERATIONS; g++) {
 		for (p=0; p<population.length; p++) {
 			var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
-			tools.initialize(world);
+			//tools.initialize(world);
+			// sparseInitialize: function(w, rows, col_bytes, chance) {
+			tools.sparseInitialize(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, 0.2)
 			
 			for (i=0; i<EPOCHS_FOR_RULE; i++) {
 				world = tools.nextEpoch(world, population[p], WORLD_ROWS, WORLD_COLS_IN_BYTES);
