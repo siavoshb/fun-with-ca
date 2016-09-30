@@ -68,10 +68,10 @@ function main() {
 	var WORLD_ROWS = 100;
 	var WORLD_COLS_IN_BYTES = 20;
 
-	var POPULATION_SIZE = 500;
-	var BEST_POPULATION_SIZE = 50;
+	var POPULATION_SIZE = 1500;
+	var BEST_POPULATION_SIZE = 200;
 	var EPOCHS_FOR_RULE = 30;
-	var GENERATIONS = 30;
+	var GENERATIONS = 1000;
 
 	var LOW_ENTROPY_SCALE_K = 4; // low entropy at small scales
 	var HIGH_ENTROPY_SCALE_K = 20; // we want high entorpy at large scales
@@ -84,7 +84,6 @@ function main() {
 	tools.initialize(seed_world); 
 
 	for (g=0; g<GENERATIONS; g++) {
-		console.log(g + ") population size: " + population.length)
 		for (p=0; p<population.length; p++) {
 			
 			world = seed_world.slice(0);

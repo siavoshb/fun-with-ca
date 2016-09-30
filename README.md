@@ -2,6 +2,12 @@
 
 ## Open Problems
 1. Composite, weighted, scaled entropy does not capture 'emergence'
+2. What seems to happen is the end-state is high entropy/white-noise. Even if start with just a few seeds, instead of high entropy, leads to noise.
+
+Two paths:
+- a few seeds in low entropy/dead world -> low entropy/live world
+- high entropy/dead world -> high entropy/live world 
+What do both these end states look like?
 
 ## Bugs
 1. Best score is not always kept across generations
