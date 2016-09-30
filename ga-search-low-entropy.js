@@ -2,6 +2,10 @@ var tools = require("./ca-node.js");
 
 function seedNewGeneration(best, pop_size) {
 	np = [];
+	// include original
+	for (b=0; b<best.length; b++) {
+		np[b] = best[b].rule;
+	}
 
 	hybrid_cnt = Math.floor((pop_size - best.length) * 0.75);
 	random_cnt = (pop_size - best.length) - hybrid_cnt;
@@ -30,14 +34,12 @@ function seedNewGeneration(best, pop_size) {
 			}
 		}
 
-		np[i] = new_rule;
+		np[best.length+i] = new_rule;
 	}
 
 	// include random
 	np = np.concat(randomPopulation(random_cnt));
-
-	// include 
-	np = np.concat(best)
+	
 
 	return np;
 }
@@ -59,31 +61,33 @@ function randomPopulation(count) {
 }
 
 function escore(e_large, e_small) {
-	return e_large - 2*e_small;
+	return e_large - e_small;
 }
 
 function main() {
 	var WORLD_ROWS = 100;
 	var WORLD_COLS_IN_BYTES = 20;
 
-	var POPULATION_SIZE = 300;
+	var POPULATION_SIZE = 500;
 	var BEST_POPULATION_SIZE = 50;
-	var EPOCHS_FOR_RULE = 50;
+	var EPOCHS_FOR_RULE = 30;
 	var GENERATIONS = 30;
 
-	var LOW_ENTROPY_SCALE_K = 15; // low entropy at small scales
-	var HIGH_ENTROPY_SCALE_K = 60; // we want high entorpy at large scales
+	var LOW_ENTROPY_SCALE_K = 4; // low entropy at small scales
+	var HIGH_ENTROPY_SCALE_K = 20; // we want high entorpy at large scales
 
 	var population = randomPopulation(POPULATION_SIZE);
 
 	var best_population = [];
 
+	var seed_world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
+	tools.initialize(seed_world); 
+
 	for (g=0; g<GENERATIONS; g++) {
+		console.log(g + ") population size: " + population.length)
 		for (p=0; p<population.length; p++) {
-			var world = new Uint8Array(WORLD_ROWS*WORLD_COLS_IN_BYTES);
-			//tools.initialize(world);
-			// sparseInitialize: function(w, rows, col_bytes, chance) {
-			tools.sparseInitialize(world, WORLD_ROWS, WORLD_COLS_IN_BYTES, 0.2)
+			
+			world = seed_world.slice(0);
 			
 			for (i=0; i<EPOCHS_FOR_RULE; i++) {
 				world = tools.nextEpoch(world, population[p], WORLD_ROWS, WORLD_COLS_IN_BYTES);
@@ -140,7 +144,9 @@ function main() {
 		console.log("gen " + g + " with best score " + best_score)
 		console.log(JSON.stringify(best_rule))
 
-		pa = seedNewGeneration(best_population, POPULATION_SIZE)
+
+		population = seedNewGeneration(best_population, POPULATION_SIZE)
+		
 	}
 }
 

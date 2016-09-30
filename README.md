@@ -1,5 +1,11 @@
 # fun-with-ca
 
+## Open Problems
+1. Composite, weighted, scaled entropy does not capture 'emergence'
+
+## Bugs
+1. Best score is not always kept across generations
+
 ## Ideas
 
 1. Reduce search space. Limit the space of the rule set; ex, ignore rotations/symetries of bit mask; ie all start/end points are the same.

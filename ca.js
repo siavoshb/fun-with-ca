@@ -4,15 +4,12 @@ function initialize(w) {
 	}
 }
 
-function sparseInitialize(w, rows, col_bytes, chance) {
-	for (i=0; i<rows; i++) {
-		for (j=0; j<col_bytes*8; j++) {
-			if (Math.random() < chance) {
-				setBitAt(w, i, j, 1);
-			} else {
-				setBitAt(w, i, j, 0)
-			}
-		}
+function sparseInitialize(w, rows, col_bytes, num_seeds) {
+
+	for (n=0; n<num_seeds; n++) {
+		i = Math.floor(Math.random()*rows);
+		j = Math.floor(Math.random()*col_bytes*8);
+		setBitAt(w, i, j, 1)
 	}
 }
 
