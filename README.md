@@ -1,5 +1,13 @@
 # fun-with-ca
 
+* Ultimate goal *
+1. Detect rule-sets that give rise to self reproducing CA
+http://sjsu.rudyrucker.com/~shruti.parihar/paper/
+
+## Cool stuff
+https://www.reddit.com/r/cellular_automata/
+https://www.youtube.com/channel/UCZD4RoffXIDoEARW5aGkEbg
+
 ## Fitness Measures Thoughts/Issues/Proposals
 1. Composite, weighted, scaled entropy does not capture 'emergence'
 2. What seems to happen is the end-state is high entropy/white-noise. Even if start with just a few seeds, instead of high entropy, leads to noise.
@@ -26,6 +34,9 @@ https://www.researchgate.net/profile/Armando_Azua/publication/259436547_The_pote
 http://psoup.math.wisc.edu/mcell/pow.html
 https://oroboro.com/portable-threads-and-Mutexes/
 
+Chemical Stochastic CA's
+http://www.vcu.edu/csbc/bbsi/inst/courses/courses-2005/Automata/CellularAutomata.pdf
+https://mitpress.mit.edu/sites/default/files/titles/alife/0262297140chap51.pdf
 
 ## Ideas
 
@@ -35,3 +46,9 @@ Ex.  100 is same as 010 and 001?
 
 ## Next stages?
 1. Create a secondary rule set operating on the grid generated at a higher scale of level0; a different color
+
+## References
+
+Different neighborhoods
+Moore - https://en.wikipedia.org/wiki/Moore_neighborhood
+Von Neuman et al. - https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
