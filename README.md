@@ -52,3 +52,20 @@ Ex.  100 is same as 010 and 001?
 Different neighborhoods
 Moore - https://en.wikipedia.org/wiki/Moore_neighborhood
 Von Neuman et al. - https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
+
+## Notes on "The Origins of Order"
+
+Intro
+Edge of Order and Chaos; revisit k window entropy measure: low < life < high or high < life < low ?
+
+pg. 67
+"The model suggests at least one means of mitigating the conflicting-constraints complexity crisis. If the number of epistatic interactions K remains small while N increases, landscapes retain high accessible local optima. This is a first hint of something like a construction requirement to make complex systems with many interacting parts which remain perfectibe by mutation and selection. Each part should directly impinge on rather few other parts." 
+
+Point: given 'genotype', reduce coupling K, ie keep dimensions un-corellated.
+
+pg. 102
+Model, RNA experiment [Fontana and Schuster 1987].
+Fitness measures of binary RNA string:
+1. Thermodynamic - stability of the folded strand and so is proportional to the total fraction of the N bits which are bonded on the folded strand.
+2. Kinetic - a more complex rule; suppose the rate of replication of a string is increaed in open, unbonded regions but the loss of stability in these regions leads to easier degradation of the molecule; mix of ease of replication and resistance to degradation
+
