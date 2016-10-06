@@ -1,0 +1,19 @@
+More formally, an articial chemistry can be dened by a triple (S, R, A), where S is the set of all possible molecules, R is a set of collision rules representing the interaction
+among the molecules, and A is an algorithm describing the reaction vessel or domain and how the rules are applied to the molecules inside the vessel. Both the set of molecules S and the set of reaction rules R can be dened explicitly or implicitly (e.g., by an algorithm or mathematical expression).
+
+S = space of integers, possibly in some range
+R = set of mathemtical, bit, and logic operators
+A = random combinatorial / genetic evolution
+
+Approaches can be characterized roughly by whether each molecule is treated explicitly or all molecules of one type are represented by a number, their frequency, or concentration.
+
+1. Stochastic molecular collisions
+Further parameters such as rate constants, energy, spatial information, or temperature can be introduced into the rules for the chemistry to become more realistic.
+
+Create set of random rules takeing n numbers/binary-strings and produces m numbers/binary-strings; preservation of mass should be kept possibly 
+Track it all
+
+genetic evelution fitness functions:
+- detect cyles of reactions
+- self sustaining reactions
+
