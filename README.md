@@ -38,6 +38,31 @@ Chemical Stochastic CA's
 http://www.vcu.edu/csbc/bbsi/inst/courses/courses-2005/Automata/CellularAutomata.pdf
 https://mitpress.mit.edu/sites/default/files/titles/alife/0262297140chap51.pdf
 
+wolfram CA:
+http://www.stephenwolfram.com/publications/cellular-automata-complexity/pdfs/two-dimensional-cellular-automata.pdf
+
+--- Artificial Chemistries ---
+
+self replicating sequences of binary numbers:
+http://www.sciencedirect.com/science/article/pii/089812219390046X
+http://ac.els-cdn.com/089812219390046X/1-s2.0-089812219390046X-main.pdf?_tid=2a8d84b2-8ab2-11e6-ac3f-00000aab0f02&acdnat=1475641037_5e36fcdd2e502700708b65493321bcf2
+
+AC intro video
+https://www.youtube.com/watch?v=-JDFdIztGk0
+
+Hutton - molecules:
+http://www.cc.gatech.edu/~turk/bio_sim/articles/hutton_rep_molecules.pdf
+
+The Creation of Novelty in Artificial Chemistries
+http://www.alife.org/alife8/proceedings/sub1082.pdf
+
+AC - review
+http://www.cs.mun.ca/~banzhaf/papers/alchemistry_review_MIT.pdf
+
+github blog platform:
+https://pages.github.com/
+
+
 ## Ideas
 
 1. Reduce search space. Limit the space of the rule set; ex, ignore rotations/symetries of bit mask; ie all start/end points are the same.
@@ -52,6 +77,11 @@ Ex.  100 is same as 010 and 001?
 Different neighborhoods
 Moore - https://en.wikipedia.org/wiki/Moore_neighborhood
 Von Neuman et al. - https://en.wikipedia.org/wiki/Von_Neumann_neighborhood
+
+## Notes
+
+http://www.cc.gatech.edu/~turk/bio_sim/articles/hutton_rep_molecules.pdf
+
 
 ## Notes on "The Origins of Order"
 
