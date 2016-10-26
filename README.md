@@ -99,3 +99,6 @@ Fitness measures of binary RNA string:
 1. Thermodynamic - stability of the folded strand and so is proportional to the total fraction of the N bits which are bonded on the folded strand.
 2. Kinetic - a more complex rule; suppose the rate of replication of a string is increaed in open, unbonded regions but the loss of stability in these regions leads to easier degradation of the molecule; mix of ease of replication and resistance to degradation
 
+# Visualization libraries
+https://github.com/VincentGarreau/particles.js/
+https://p5js.org/examples/simulate-l-systems.html
