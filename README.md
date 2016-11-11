@@ -34,6 +34,9 @@ https://www.researchgate.net/profile/Armando_Azua/publication/259436547_The_pote
 http://psoup.math.wisc.edu/mcell/pow.html
 https://oroboro.com/portable-threads-and-Mutexes/
 
+Island Generator
+http://exupero.org/hazard/post/islands/
+
 Chemical Stochastic CA's
 http://www.vcu.edu/csbc/bbsi/inst/courses/courses-2005/Automata/CellularAutomata.pdf
 https://mitpress.mit.edu/sites/default/files/titles/alife/0262297140chap51.pdf
